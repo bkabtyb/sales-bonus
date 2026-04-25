@@ -127,6 +127,15 @@ function analyzeSalesData(data, options) {
             .sort((a, b) => b.quantity - a.quantity)
             .slice(0, 10);
     });
+    
+       if (!data.data(purchase_records)) {
+        throw new Error("Некорректные данные");
+    }
+
+    if (!purchase_records.length === 0){
+        return 0
+    }
+    }
 
     // === Шаг 4: финальный результат ===
     return sellerStats.map(seller => ({
@@ -138,4 +147,4 @@ function analyzeSalesData(data, options) {
         top_products: seller.top_products,
         bonus: +seller.bonus.toFixed(2)
     }));
-}
+
