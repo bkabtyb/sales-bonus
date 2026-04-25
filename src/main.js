@@ -57,6 +57,10 @@ function analyzeSalesData(data, options) {
         throw new Error("Некорректные данные");
     }
 
+    if((!data || !data.sellers) || (!data || !data.products)){
+        throw new Error("Некорректные данные");
+    }
+
     if (!options || !options.calculateRevenue) {
         throw new Error("Нет функции calculateRevenue");
     }
@@ -88,6 +92,7 @@ function analyzeSalesData(data, options) {
     data.purchase_records.forEach(record => {
 
         const seller = sellerIndex[record.seller_id];
+        if(!seller) return;
 
         // увеличиваем количество продаж
         seller.sales_count += 1;
@@ -98,6 +103,7 @@ function analyzeSalesData(data, options) {
         record.items.forEach(item => {
 
             const product = productIndex[item.sku];
+            if(!product) return;
 
             // себестоимость
             const cost = product.purchase_price * item.quantity;
