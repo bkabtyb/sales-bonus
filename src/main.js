@@ -52,12 +52,13 @@ function analyzeSalesData(data, options) {
     // @TODO: Назначение премий на основе ранжирования
 
     // @TODO: Подготовка итоговой коллекции с нужными полями
-         if (!data.data(purchase_records)) {
+
+    if (!data || !data.purchase_records) {
         throw new Error("Некорректные данные");
     }
 
-    if (!purchase_records.length === 0){
-        return 0
+    if (!options || !options.calculateRevenue) {
+        throw new Error("Нет функции calculateRevenue");
     }
 
     const calculateRevenue = options.calculateRevenue;
@@ -69,7 +70,7 @@ function analyzeSalesData(data, options) {
     data.sellers.forEach(s => {
         sellerIndex[s.id] = {
             id: s.id,
-            name: `${ s.first_name} ${s.last_name}`,
+            name: `${s.first_name} ${s.last_name}`,
             revenue: 0,
             profit: 0,
             sales_count: 0,
@@ -134,7 +135,6 @@ function analyzeSalesData(data, options) {
             .sort((a, b) => b.quantity - a.quantity)
             .slice(0, 10);
     });
-}
 
     // === Шаг 4: финальный результат ===
     return sellerStats.map(seller => ({
@@ -147,3 +147,4 @@ function analyzeSalesData(data, options) {
         bonus: +seller.bonus.toFixed(2)
     }));
 
+}
