@@ -52,13 +52,6 @@ function analyzeSalesData(data, options) {
     // @TODO: Назначение премий на основе ранжирования
 
     // @TODO: Подготовка итоговой коллекции с нужными полями
-     if (!data || !data.purchase_records) {
-        throw new Error("Некорректные данные");
-    }
-
-    if (!options || !options.calculateRevenue) {
-        throw new Error("Нет функции calculateRevenue");
-    }
 
     const calculateRevenue = options.calculateRevenue;
 
